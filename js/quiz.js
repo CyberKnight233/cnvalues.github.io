@@ -71,13 +71,8 @@ $(document).ready(function () {
         }
     }
 
-    function is_special_axis(axis) {
-        return specials.some((value) => {
-            return value.id === axis;
-        })
-    }
-
     function results() {
+        debugger;
 
         // 首先找到所有出现过的属性
         let scores = {};
@@ -92,24 +87,12 @@ $(document).ready(function () {
         for (let i = 0; i < questions.length; i++) {
             for (let axis in questions[i].effect) {
                 let choice = choices[i];
-                // if (is_special_axis(axis)) {
-                //     if (questions[i].effect[axis] > 0) {
-                //         choice = Math.max(choice, 0);
-                //     } else {
-                //         choice = Math.min(choice, 0);
-                //     }
-                // }
                 scores[axis] += choice * questions[i].effect[axis];
                 max_scores[axis] += Math.abs(questions[i].effect[axis]);
             }
         }
 
         for (let axis in scores) {
-            // if (is_special_axis(axis)) {
-            //     scores[axis] = scores[axis] / max_scores[axis];
-            // } else {
-            //     scores[axis] = (scores[axis] + max_scores[axis]) / (2 * max_scores[axis]);
-            // }
             scores[axis] = (scores[axis] + max_scores[axis]) / (2 * max_scores[axis]);
             scores[axis] = Math.round(scores[axis] * 100);
         }
